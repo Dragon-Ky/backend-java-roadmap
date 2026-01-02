@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 
 public class StudentService {
@@ -12,7 +13,7 @@ public class StudentService {
             System.out.println("No student");
         }
         for (Student s : students) {
-            System.out.println(students);
+            System.out.println(s);
         }
     }
     public Student findByID(String Id){
@@ -34,16 +35,9 @@ public class StudentService {
     public void reversedByGpa(){
         students.sort(Comparator.comparingDouble(Student::getGpa).reversed());
     }
-    public Student findTopStudent(){
-        if (students.isEmpty()){
-            return null;
-        }
-        Student Top = students.getFirst();
-        for (Student s:students){
-            if  (s.getGpa()>Top.getGpa()) {
-                Top = s;
-            }
-        }
-        return Top;
+    public Student findTopStudent() {
+        if (students.isEmpty()) return null;
+        return Collections.max(students, Comparator.comparingDouble(Student::getGpa));
     }
+
 }
