@@ -5,9 +5,7 @@ import java.util.Comparator;
 public class StudentService {
     private ArrayList<Student> students = new ArrayList<>();
 
-    public void addStudent(Student s){
-        students.add(s);
-    }
+
     public void printAll(){
         if (students.isEmpty()){
             System.out.println("No student");
@@ -40,4 +38,25 @@ public class StudentService {
         return Collections.max(students, Comparator.comparingDouble(Student::getGpa));
     }
 
+    //ngày 2
+
+    public boolean exitsById(String Id){
+        return findByID(Id) != null;
+    }
+
+    public boolean addStudent(Student s){
+        if (exitsById(s.getId())){
+            return false;
+        }
+        students.add(s);
+        return true;
+    }
+    public boolean updateGpa(String Id,double newGpa){
+        Student  found = findByID(Id);
+        if (found == null){
+            return false;
+        }
+        found.setGpa(newGpa);
+        return true;
+    }
 }
