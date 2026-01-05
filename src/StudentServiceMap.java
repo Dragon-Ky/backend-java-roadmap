@@ -1,5 +1,9 @@
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import java.util.List;
+import java.util.ArrayList;
 
 public class StudentServiceMap {
     private Map<String,Student> Studentmap = new HashMap<>();
@@ -72,5 +76,32 @@ public class StudentServiceMap {
         List<Student> agelist = new ArrayList<>(Studentmap.values());
         agelist.sort(Comparator.comparingInt(Student::getAge));
         return agelist;
+    }
+
+    // ngày 4
+    //hàm lấy tất cả học sinh
+    public List<Student> getAllStudent(){
+         return new ArrayList<>(Studentmap.values());
+    }
+    //Hàm lưu danh sách vào file
+    public void saveToFile(String filePath){
+        try {
+            StudentFileUtil.save(filePath,getAllStudent());
+        } catch (Exception e){
+            System.out.println("Lưu thất bại"+e.getMessage());
+        }
+    }
+    //Hàm load file
+    public void loadFormFile(String filePath){
+        try {
+            List<Student> list = StudentFileUtil.load(filePath);
+            Studentmap.clear();
+            for (Student s : list){
+                Studentmap.put(s.getId(),s);
+            }
+            System.out.println("Loaded "+Studentmap.size()+" học sinh từ "+ filePath);
+        }catch (Exception e){
+            System.out.println("Load thất bại "+ e.getMessage());
+        }
     }
 }
